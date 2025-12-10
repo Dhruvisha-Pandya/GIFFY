@@ -1,6 +1,6 @@
-import { useTrendingGifs } from "../hooks/gif_api.js";
-import GifGrid from "../components/GifGrid.jsx";
-import { useAuth } from "../context/AuthContext.jsx";
+import { useTrendingGifs } from "./hooks/gif_api.js";
+import GifGrid from "./components/GifGrid.jsx";
+// import { useAuth } from "../context/AuthContext.jsx";
 import { useEffect, useState } from "react";
 // import { getUserFavourites } from "../utils/favourites.js";
 
