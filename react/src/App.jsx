@@ -1,14 +1,11 @@
-// src/App.jsx
-
-import Home from '/pages/Home'; // 1. Import the Home component
+import Home from './pages/home.jsx';
 import './App.css'
 
 function App() {
-  // You can remove the count state and default content
-  
-  // 2. Return the Home component
   return (
-    <Home />
+    <div className="app">
+      <Home />
+    </div>
   );
 }
 

@@ -1,40 +1,44 @@
-import { useTrendingGifs } from "./hooks/gif_api.js";
-import GifGrid from "./components/GifGrid.jsx";
-// import { useAuth } from "../context/AuthContext.jsx";
-import { useEffect, useState } from "react";
-// import { getUserFavourites } from "../utils/favourites.js";
+import { useTrendingGifs } from "../hooks/gif_api.js";
+import GifGrid from "../components/GifGrid.jsx";
+import { useState } from "react";
 
 export default function Home() {
-  const { gifs, loading } = useTrendingGifs();
-  const { user, role } = useAuth();
-  const [favouriteIds, setFavouriteIds] = useState([]);
-
-  const refreshFavs = async () => {
-    if (user) {
-      const favs = await getUserFavourites(user.uid);
-      setFavouriteIds(favs.map((f) => f.id));
-    }
-  };
-
-  useEffect(() => {
-    if (role === "user") {
-      refreshFavs();
-    } else {
-      setFavouriteIds([]);
-    }
-  }, [user, role]);
+  const { gifs, loading, error } = useTrendingGifs();
+  const [showSearch, setShowSearch] = useState(false);
 
   return (
     <div className="page">
       <h1>Trending GIFs</h1>
+      
+      <div className="nav-buttons">
+        <button className="nav-btn" onClick={() => setShowSearch(!showSearch)}>
+          Search
+        </button>
+        <button className="nav-btn" onClick={() => alert('Random GIF feature coming soon!')}>
+          Random GIF
+        </button>
+        <button className="nav-btn" onClick={() => alert('Favorite GIFs feature coming soon!')}>
+          Favorite GIFs
+        </button>
+      </div>
+
+      {showSearch && (
+        <div className="search-box">
+          <input 
+            type="text" 
+            placeholder="Search for GIFs..." 
+            className="search-input"
+          />
+          <button className="search-btn">Search</button>
+        </div>
+      )}
+
       {loading ? (
         <div>Loading trending gifs...</div>
+      ) : error ? (
+        <div>Error: {error}</div>
       ) : (
-        <GifGrid
-          gifs={gifs}
-          favouriteIds={favouriteIds}
-          onItemChange={refreshFavs}
-        />
+        <GifGrid gifs={gifs} />
       )}
     </div>
   );
